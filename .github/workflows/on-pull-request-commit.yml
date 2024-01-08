@@ -28,4 +28,4 @@ jobs:
 
       - name: Check
         run: |
-          cargo clippy -- --no-deps -D warnings 
+          cargo clippy -- --no-deps -D warnings
