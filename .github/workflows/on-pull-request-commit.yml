@@ -1,0 +1,31 @@
+---
+name: PR commit
+
+on:
+  merge_group:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  main:
+    name: Build fork-off
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout git
+        uses: actions/checkout@v4
+
+      - name: Call action get-ref-properties
+        id: get-ref-properties
+        uses: Cardinal-Cryptography/github-actions/get-ref-properties@v6
+
+      - name: Install Rust toolchain
+        uses: Cardinal-Cryptography/github-actions/install-rust-toolchain@v6
+
+      - name: Build
+        run: |
+          cargo build --release
+
+      - name: Check
+        run: |
+          cargo clippy -- --no-deps -D warnings 
