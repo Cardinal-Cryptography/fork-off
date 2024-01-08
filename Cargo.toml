@@ -2,7 +2,12 @@
 name = "fork-off"
 version = "2.0.0"
 edition = "2021"
+readme = "README.md"
 license = "Apache 2.0"
+description = "Command-line tool for creating snapshots of a running aleph-bft chains.."
+authors = ["Cardinal", "Aleph Zero Foundation"]
+homepage = "https://alephzero.org"
+repository = "https://github.com/Cardinal-Cryptography/fork-off"
 
 [dependencies]
 anyhow = "1.0"
