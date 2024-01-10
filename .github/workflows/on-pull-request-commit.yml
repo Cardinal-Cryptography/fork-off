@@ -18,10 +18,10 @@ jobs:
       - name: Install Rust toolchain
         uses: Cardinal-Cryptography/github-actions/install-rust-toolchain@v6
 
-      - name: Build
-        run: |
-          cargo build --release
-
       - name: Check
         run: |
           cargo clippy -- --no-deps -D warnings
+
+      - name: Build
+        run: |
+          cargo build --release
