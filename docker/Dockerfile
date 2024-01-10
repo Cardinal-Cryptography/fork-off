@@ -7,6 +7,6 @@ RUN apt update && \
 
 WORKDIR app
 
-COPY fork-off /usr/local/bin
+COPY target/release/fork-off /usr/local/bin
 
 ENTRYPOINT ["fork-off"]

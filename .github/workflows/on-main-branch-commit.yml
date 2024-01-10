@@ -17,9 +17,14 @@ jobs:
     uses: ./.github/workflows/_check-vars-and-secrets.yml
     secrets: inherit
 
-  build-and-push-faucet:
-    name: Build and push faucet image
+  build-fork-off:
+    name: Build fork-off binary
     needs: [check-vars-and-secrets]
+    uses: ./.github/workflows/_build-fork-off-binary.yml
+
+  push-image-to-ecr:
+    name: Build and push fork-off image to ECR
+    needs: [build-fork-off]
     runs-on: ubuntu-20.04
     steps:
       - name: GIT | Checkout Source code
@@ -29,7 +34,13 @@ jobs:
         id: get-ref-properties
         uses: Cardinal-Cryptography/github-actions/get-ref-properties@v6
 
-      - name: Get facuet rc image name
+      - name: Download fork-off binary from artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: fork-off
+          path: target/release/
+
+      - name: Get fork-off rc image name
         id: get-image-name
         env:
           ECR_REGISTRY: '${{ vars.ECR_PUBLIC_REGISTRY }}'
@@ -42,6 +53,7 @@ jobs:
 
       - name: Build docker image
         run: |
+          chmod +x target/release/fork-off
           docker build --tag '${{ steps.get-image-name.outputs.image }}' -f ./Dockerfile .
 
       - name: Login to ECR

@@ -1,0 +1,28 @@
+---
+#  This workflow builds fork-off binary
+name: Build fork-off
+on:
+  workflow_call:
+
+jobs:
+  main:
+    name: Build
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout git
+        uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: Cardinal-Cryptography/github-actions/install-rust-toolchain@v6
+
+      - name: Build
+        run: |
+          cargo build --release
+
+      - name: Upload fork-off to artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: fork-off
+          path: target/release/fork-off
+          if-no-files-found: error
+          retention-days: 7

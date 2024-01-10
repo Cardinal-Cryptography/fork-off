@@ -8,20 +8,10 @@ on:
       - main
 
 jobs:
-  main:
-    name: Build fork-off
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Checkout git
-        uses: actions/checkout@v4
+  build-fork-off:
+    name: Build fork-off binary
+    uses: ./.github/workflows/_build-fork-off-binary.yml
 
-      - name: Install Rust toolchain
-        uses: Cardinal-Cryptography/github-actions/install-rust-toolchain@v6
-
-      - name: Check
-        run: |
-          cargo clippy -- --no-deps -D warnings
-
-      - name: Build
-        run: |
-          cargo build --release
+  run-checks:
+    name: Run checks
+    uses: ./.github/workflows/_run-checks.yml
