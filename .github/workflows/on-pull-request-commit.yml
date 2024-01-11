@@ -1,0 +1,17 @@
+---
+name: PR commit
+
+on:
+  merge_group:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-fork-off:
+    name: Build fork-off binary
+    uses: ./.github/workflows/_build-fork-off-binary.yml
+
+  run-checks:
+    name: Run checks
+    uses: ./.github/workflows/_run-checks.yml

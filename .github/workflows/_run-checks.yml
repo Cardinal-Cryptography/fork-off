@@ -1,0 +1,20 @@
+---
+#  This workflow runs static checks
+name: Run checks
+on:
+  workflow_call:
+
+jobs:
+  main:
+    name: Clippy
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout git
+        uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: Cardinal-Cryptography/github-actions/install-rust-toolchain@v6
+
+      - name: cargo clippy
+        run: |
+          cargo clippy -- --no-deps -D warnings
